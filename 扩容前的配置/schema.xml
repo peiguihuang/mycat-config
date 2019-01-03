@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://io.mycat/">
+	
+
+	<schema name="test" checkSQLschema="false" sqlMaxLimit="10000000" dataNode="dn1_test">
+		<table name="yf_sub_orders" rule="test-sharding-by-murmur-user-id" dataNode="dn1_test,dn2_test" />
+
+	</schema>  
+	
+
+	<dataNode name="dn1_test" dataHost="localhost1" database="test1" />
+	<dataNode name="dn2_test" dataHost="localhost2" database="test2" />
+
+
+
+	<dataHost name="localhost1" maxCon="1000" minCon="10" balance="3" writeType="0" dbType="mysql" dbDriver="native" switchType="-1">
+		<heartbeat>select user()</heartbeat>
+			<writeHost host="hostM1" url="192.168.11.24:3306" user="root" password="Infun123!@#_dev"/>
+	</dataHost>
+
+	<dataHost name="localhost2" maxCon="1000" minCon="10" balance="3" writeType="0" dbType="mysql" dbDriver="native" switchType="-1">
+		<heartbeat>select user()</heartbeat>
+			<writeHost host="hostM2" url="192.168.11.24:3306" user="root" password="Infun123!@#_dev"/>
+	</dataHost>
+
+
+</mycat:schema>
+
+
